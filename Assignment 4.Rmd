@@ -4,7 +4,7 @@ title: |
   | Introduction to Applied Data Science
   | 2022-2023
 author: |
-  | Ying Ying Tsai
+  | Ying Ying Tsai 0634948
   | y.tsai1@students.uu.nl
   | https://github.com/yingying171
 date: April 2023
@@ -32,7 +32,9 @@ This interpretation will not be graded, but a Github shows the contributors to a
 
 **Question 1.1**: Fill in the **github username** of the class mate to whose repository you have contributed.
 
-[Fill in here]
+<https://github.com/yingying171>
+
+(I don't have github partner)
 
 ### Part 2: Analyzing various linear models
 
@@ -85,6 +87,12 @@ t_test_result
 
 **Question 3.2**: What is the $p$-value of the test, and what does that mean? Write down your answer below.
 
+Answer: The p-value of the Welch Two Sample t-test on the variable growth, comparing the group "0 revolutions" with the group "More than 0 revolutions", is 0.06871.
+
+The p-value represents the probability of observing a test statistic as extreme as the one calculated (or more extreme) under the null hypothesis. In this case, the null hypothesis is that there is no difference in the mean growth rates between the two groups.
+
+Since the p-value (0.06871) is greater than the commonly used significance level of 0.05, we do not have strong evidence to reject the null hypothesis. This means that we do not have sufficient evidence to conclude that there is a significant difference in the mean growth rates between countries with 0 revolutions and countries with more than 0 revolutions.
+
 We can also control for other factors by including them in a linear model, for example:
 
 $$
@@ -92,6 +100,12 @@ $$
 $$
 
 **Question 3.3**: What do you think the purpose of including the variable `rgdp60` is? Look at `?GrowthSW` to find out what the variables mean.
+
+Answer: Including the variable rgdp60 in the linear model serves the purpose of controlling for the effect of the initial level of real GDP (Gross Domestic Product) in 1960 on the growth rates.
+
+Looking at ?GrowthSW, we can find information about the variables in the GrowthSW dataset. Specifically, the variable rgdp60 represents the real GDP per capita in 1960. By including this variable in the linear model, we aim to account for the potential influence of the initial economic conditions on the subsequent growth rates.
+
+Controlling for rgdp60 allows us to isolate and examine the effect of the treat variable (representing the number of revolutions) on growth rates while taking into account the starting economic conditions of each country. This helps in determining whether the number of revolutions has an independent effect on growth rates beyond the influence of the initial GDP level.
 
 We now want to estimate a stepwise model. Stepwise means that we first estimate a univariate regression $\text{growth}_i = \beta_0 + \beta_1 \cdot \text{treat}_i + \epsilon_i$, and in each subsequent model, we add one control variable.
 
@@ -152,6 +166,20 @@ model_summary
 
 **Question 3.6**: According to this analysis, what is the main driver of economic growth? Why?
 
+Answer: Based on the provided model summary table, we can analyze the coefficient estimates and their significance levels to identify the main driver of economic growth. The variables included in the models are the intercept, "treatMore than 0 revolutions," "rgdp60," "Tradeshare," and "education."
+
+Looking at the coefficient estimates, we can observe the following:
+
+"treatMore than 0 revolutions": The estimates are negative (-0.782, -1.028, -0.415, -0.069) in all four models. This suggests that countries with more than 0 revolutions have lower economic growth compared to countries with 0 revolutions.
+
+"rgdp60": The estimates are all 0.000 except for the fourth model, where it is 0. This indicates that the variable "rgdp60" does not have a significant relationship with economic growth in the first three models.
+
+"Tradeshare": The estimates are 2.233\* and 1.813\* (denoted by \*). This suggests that an increase in "Tradeshare" is associated with higher economic growth. The significance levels indicate that this relationship is statistically significant in both models.
+
+"education": The estimate is 0.564\*\*\* (denoted by \*\*\*), indicating a significant positive relationship between "education" and economic growth. This suggests that higher levels of education are associated with higher economic growth.
+
+Based on this analysis, we can conclude that the main driver of economic growth can be "Tradeshare" which has a positive impact on economic growth. The positive coefficient estimate and its statistical significance are observed consistently across multiple models, which suggests a robust relationship. This consistency strengthens the argument for "Tradeshare" being a main driver of economic growth.
+
 **Question 3.7**: In the code chunk below, edit the table such that the cells (including standard errors) corresponding to the variable `treat` have a red background and white text. Make sure to load the `kableExtra` library beforehand.
 
 ```{r}
@@ -180,6 +208,7 @@ model_table_modified
 **Question 3.8**: Write a piece of code that exports this table (without the formatting) to a Word document.
 
 ```{r}
+install.packages("pander")
 library(pander)
 
 # Convert the modified table to a markdown table
